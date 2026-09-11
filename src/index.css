@@ -15,6 +15,7 @@
   .btn-wa { @apply inline-flex items-center justify-center gap-2.5 rounded-full bg-[#25d366] px-6 py-3.5 font-semibold text-[#063b2a] shadow-lift transition hover:brightness-105 active:scale-[.98]; }
   .btn-ghost { @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/40 px-5 py-3 font-semibold text-white transition hover:bg-white/10; }
   .card { @apply rounded-2xl border border-line bg-white shadow-soft; }
+  .input { @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-[16px] text-ink outline-none transition placeholder:text-muted/60 focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/15; }
 }
 
 /* Motion is decoration here; anyone who asks for less gets none. */

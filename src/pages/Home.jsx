@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import Landscape from '../components/Landscape.jsx';
+import Photo from '../components/Photo.jsx';
 import Reveal from '../components/Reveal.jsx';
 import WaIcon from '../components/WaIcon.jsx';
 import { useSite } from '../lib/useSite';
@@ -30,6 +31,14 @@ const ABOUT = {
     height: '253 m drop',
     blurb: 'The Sharavathi river falls in four streams — Raja, Rani, Rover and Rocket — best seen in full flow just after the monsoon.',
   },
+};
+
+/* Which photograph belongs to which destination. A place with no photograph
+   keeps the drawn landscape rather than borrowing somebody else's hill. */
+const PHOTO = {
+  MULLAYANAGIRI: { name: '2', position: 'center 60%' },
+  KUDREMUKHA: { name: '3', position: 'center' },
+  KODACHADRI: { name: '5', position: 'center 55%' },
 };
 
 const FALLBACK_PLACES = [
@@ -77,7 +86,6 @@ export default function Home() {
       <Hero wa={wa} tagline={site?.product?.tagline} taglineKn={site?.product?.tagline_kn} />
       <HowItWorks wa={wa} />
       <Destinations places={places} wa={wa} />
-      <Fees fees={site?.fees} percent={site?.platform_fee_percent} />
       <GoodToKnow days={days} release={release} lastEntryMin={lastEntryMin} slots={slots} notPermitted={rules.not_permitted} />
       <Responsible />
       <Faq days={days} release={release} lastEntryMin={lastEntryMin} />
@@ -90,8 +98,10 @@ function Hero({ wa, tagline, taglineKn }) {
   const calm = useReducedMotion();
   return (
     <section className="relative isolate flex min-h-[92vh] items-end overflow-hidden pb-16 pt-28 sm:items-center sm:pb-24">
-      <Landscape variant={0} className="absolute inset-0 -z-20 h-full w-full" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-forest-900/85 via-forest-900/35 to-forest-900/10" />
+      <Photo name="4" priority variant={0} sizes="100vw" position="center 55%"
+        alt="Grassland ridges of the Western Ghats under monsoon cloud"
+        className="absolute inset-0 -z-20 h-full w-full" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-forest-900/90 via-forest-900/50 to-forest-900/25" />
 
       <div className="container-x grid w-full items-center gap-12 lg:grid-cols-[1.15fr_.85fr]">
         <motion.div
@@ -225,7 +235,13 @@ function Destinations({ places, wa }) {
               <Reveal key={p.code} delay={i * 0.06}>
                 <article className={`card group h-full overflow-hidden transition duration-300 ${p.is_active ? 'hover:-translate-y-1 hover:shadow-lift' : ''}`}>
                   <div className="relative h-48 overflow-hidden">
-                    <Landscape variant={i} mist={p.is_active} className={`h-full w-full transition duration-700 group-hover:scale-105 ${p.is_active ? '' : 'grayscale-[35%]'}`} />
+                    {PHOTO[p.code] ? (
+                      <Photo name={PHOTO[p.code].name} variant={i} position={PHOTO[p.code].position}
+                        sizes="(min-width: 640px) 45vw, 100vw" alt={`${p.name}, ${p.district}`}
+                        className={`h-full w-full transition duration-700 group-hover:scale-105 ${p.is_active ? '' : 'grayscale-[30%]'}`} />
+                    ) : (
+                      <Landscape variant={i} mist={p.is_active} className={`h-full w-full transition duration-700 group-hover:scale-105 ${p.is_active ? '' : 'grayscale-[35%]'}`} />
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-forest-900/60 to-transparent" />
                     <span className={`absolute left-4 top-4 rounded-full px-3 py-1 text-[12px] font-bold ${p.is_active ? 'bg-[#25d366] text-[#063b2a]' : 'bg-white/90 text-muted'}`}>
                       {p.is_active ? 'Booking open' : 'Coming soon'}
@@ -253,60 +269,6 @@ function Destinations({ places, wa }) {
             );
           })}
         </div>
-      </div>
-    </section>
-  );
-}
-
-const TYPE_ICON = { BIKE: '🏍️', CAR: '🚗', TOOFAN: '🚙', TT: '🚐' };
-
-function Fees({ fees, percent }) {
-  const rows = fees?.length ? fees : null;
-  const pct = percent ?? 13;
-  return (
-    <section id="fees" className="scroll-mt-20 py-24">
-      <div className="container-x grid items-start gap-12 lg:grid-cols-[.9fr_1.1fr]">
-        <SectionHead eyebrow="Fees" title="One clear price per vehicle">
-          The entry fee depends on your vehicle type, which we read from its registration. A {pct}% platform fee
-          covers booking, payment and pass delivery. The total is exactly what you pay — nothing is added at checkout.
-        </SectionHead>
-        <Reveal className="card overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[440px] text-left">
-              <thead className="bg-brand text-[13px] uppercase tracking-wider text-white">
-                <tr>
-                  <th className="px-5 py-4 font-semibold">Vehicle type</th>
-                  <th className="px-5 py-4 text-right font-semibold">Entry</th>
-                  <th className="px-5 py-4 text-right font-semibold">Platform fee</th>
-                  <th className="px-5 py-4 text-right font-semibold">Total</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-line">
-                {rows ? rows.map((f) => (
-                  <tr key={f.code} className="transition hover:bg-mist-50">
-                    <td className="px-5 py-4">
-                      <div className="flex items-center gap-3">
-                        <span className="text-2xl" aria-hidden>{TYPE_ICON[f.code] || '🚘'}</span>
-                        <div>
-                          <div className="font-semibold text-ink">{f.label}</div>
-                          <div className="text-[13px] text-muted">{f.label_kn}</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-5 py-4 text-right tabular-nums text-ink">₹{f.entry}</td>
-                    <td className="px-5 py-4 text-right tabular-nums text-muted">₹{f.platform}</td>
-                    <td className="px-5 py-4 text-right text-lg font-bold tabular-nums text-brand">₹{f.total}</td>
-                  </tr>
-                )) : (
-                  <tr><td colSpan={4} className="px-5 py-10 text-center text-muted">Fees are shown in WhatsApp when you book.</td></tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-          <p className="border-t border-line bg-mist-50 px-5 py-3 text-[13px] text-muted">
-            Per vehicle, per visit, for Mullayanagiri. Your exact amount is shown again before you pay.
-          </p>
-        </Reveal>
       </div>
     </section>
   );
@@ -345,9 +307,10 @@ function GoodToKnow({ days, release, lastEntryMin, slots, notPermitted }) {
   ];
   return (
     <section className="relative overflow-hidden bg-forest-800 py-24 text-white">
-      <div className="pointer-events-none absolute inset-0 opacity-[0.07]">
-        <Landscape variant={1} sun={false} className="h-full w-full" />
+      <div className="pointer-events-none absolute inset-0 opacity-25">
+        <Photo name="1" variant={1} sizes="100vw" position="center 40%" className="h-full w-full" />
       </div>
+      <div className="pointer-events-none absolute inset-0 bg-forest-800/80" />
       <div className="container-x relative">
         <Reveal className="max-w-2xl">
           <span className="eyebrow !text-sunrise-300">Good to know</span>
@@ -456,8 +419,9 @@ function FinalCta({ wa }) {
     <section className="pb-4 pt-24">
       <div className="container-x">
         <Reveal className="relative isolate overflow-hidden rounded-[2rem] px-7 py-16 text-center text-white sm:px-16">
-          <Landscape variant={2} className="absolute inset-0 -z-20 h-full w-full" />
-          <div className="absolute inset-0 -z-10 bg-gradient-to-br from-brand-deep/90 via-brand/75 to-forest-900/60" />
+          <Photo name="5" variant={2} sizes="(min-width: 1024px) 1000px, 100vw" position="center 45%"
+            alt="A misty peak above the forest" className="absolute inset-0 -z-20 h-full w-full" />
+          <div className="absolute inset-0 -z-10 bg-gradient-to-br from-brand-deep/85 via-brand/70 to-forest-900/70" />
           <h2 className="text-3xl font-extrabold sm:text-5xl">Your morning in the clouds starts with “hi”.</h2>
           <p className="mx-auto mt-4 max-w-xl text-lg text-white/85">Slots are limited to protect the hills — book early for weekends and holidays.</p>
           <a href={wa} target="_blank" rel="noopener noreferrer" className="btn-wa mt-8 text-[17px]"><WaIcon /> Book on WhatsApp</a>

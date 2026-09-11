@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import Landscape from '../components/Landscape.jsx';
+import Photo from '../components/Photo.jsx';
 import WaIcon from '../components/WaIcon.jsx';
 import { api, safe, FALLBACK_WA } from '../lib/api';
 import { useLegalIndex, useSite } from '../lib/useSite';
@@ -62,7 +62,7 @@ export default function Policy({ slug }) {
       </Helmet>
 
       <header className="relative isolate overflow-hidden pb-14 pt-32 text-white">
-        <Landscape variant={1} className="absolute inset-0 -z-20 h-full w-full" />
+        <Photo name="1" variant={1} sizes="100vw" position="center 45%" alt="" className="absolute inset-0 -z-20 h-full w-full" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-br from-forest-900/90 via-brand-deep/85 to-forest-800/80" />
         <div className="container-x">
           <Link to="/" className="text-[14px] font-medium text-white/70 transition hover:text-white">← Back to Pravesha</Link>
@@ -97,8 +97,8 @@ export default function Policy({ slug }) {
               <h2 className="text-xl font-bold text-ink">This policy could not be loaded right now</h2>
               <p className="mt-3 text-[16px] leading-relaxed text-muted">
                 Please try again in a moment. If it keeps failing, write to{' '}
-                <a className="font-semibold text-brand-light hover:underline" href={`mailto:${biz.email || 'admin@serverpe.in'}`}>
-                  {biz.email || 'admin@serverpe.in'}
+                <a className="font-semibold text-brand-light hover:underline" href={`mailto:${biz.email || 'support@pravesha.in'}`}>
+                  {biz.email || 'support@pravesha.in'}
                 </a>{' '}
                 and we will send you the document.
               </p>
@@ -124,7 +124,7 @@ export default function Policy({ slug }) {
             <div className="card p-7">
               <h2 className="text-xl font-bold text-ink">Grievance officer</h2>
               <dl className="mt-4 grid gap-2 text-[16px] text-muted sm:grid-cols-[140px_1fr]">
-                <dt className="font-semibold text-ink">Name</dt><dd>{officer.name}</dd>
+                <dt className="font-semibold text-ink">Contact</dt><dd>{officer.name}</dd>
                 <dt className="font-semibold text-ink">Email</dt>
                 <dd><a className="text-brand-light hover:underline" href={`mailto:${officer.email}`}>{officer.email}</a></dd>
                 <dt className="font-semibold text-ink">Acknowledgement</dt><dd>Within {officer.acknowledge_hours} hours</dd>
@@ -140,8 +140,8 @@ export default function Policy({ slug }) {
               {biz.legal_form ? ` (${biz.legal_form})` : ''}
               {biz.gstin ? `, GSTIN ${biz.gstin}` : ''}
               {biz.address ? `, ${biz.address}` : ''}. Questions about this document:{' '}
-              <a className="font-semibold text-brand-light hover:underline" href={`mailto:${biz.email || 'admin@serverpe.in'}`}>
-                {biz.email || 'admin@serverpe.in'}
+              <a className="font-semibold text-brand-light hover:underline" href={`mailto:${biz.email || 'support@pravesha.in'}`}>
+                {biz.email || 'support@pravesha.in'}
               </a>.
             </p>
           )}

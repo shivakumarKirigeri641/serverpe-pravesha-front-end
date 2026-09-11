@@ -7,7 +7,6 @@ import { FALLBACK_WA } from '../lib/api';
 const NAV = [
   { href: '/#how', label: 'How it works' },
   { href: '/#destinations', label: 'Destinations' },
-  { href: '/#fees', label: 'Fees' },
   { href: '/#faq', label: 'FAQ' },
   { href: '/contact', label: 'Contact' },
 ];

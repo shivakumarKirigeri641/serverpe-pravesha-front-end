@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import Landscape from '../components/Landscape.jsx';
+import Photo from '../components/Photo.jsx';
 import WaIcon from '../components/WaIcon.jsx';
 import { useSite } from '../lib/useSite';
 import { FALLBACK_WA } from '../lib/api';
@@ -12,7 +12,7 @@ export default function NotFound() {
     <>
       <Helmet><title>Page not found — Pravesha</title><meta name="robots" content="noindex" /></Helmet>
       <section className="relative isolate flex min-h-[80vh] items-center overflow-hidden pt-24 text-white">
-        <Landscape variant={3} className="absolute inset-0 -z-20 h-full w-full" />
+        <Photo name="5" variant={3} sizes="100vw" position="center" alt="" className="absolute inset-0 -z-20 h-full w-full" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-br from-forest-900/90 via-brand-deep/80 to-forest-800/70" />
         <div className="container-x text-center">
           <div className="text-[5rem] font-extrabold leading-none text-sunrise-300 sm:text-[7rem]">404</div>
