@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import Seo, { breadcrumb, ogImage } from '../lib/seo.jsx';
 import Photo from '../components/Photo.jsx';
 import WaIcon from '../components/WaIcon.jsx';
 import { api, safe, FALLBACK_WA } from '../lib/api';
@@ -55,11 +55,14 @@ export default function Policy({ slug }) {
 
   return (
     <>
-      <Helmet>
-        <title>{`${doc?.title || 'Policy'} — Pravesha`}</title>
-        {doc?.summary && <meta name="description" content={doc.summary} />}
-        <link rel="canonical" href={`https://pravesha.in/${slug}`} />
-      </Helmet>
+      <Seo
+        title={`${doc?.title || 'Policy'} — Pravesha`}
+        description={doc?.summary || 'A Pravesha policy.'}
+        path={`/${slug}`}
+        type="article"
+        image={ogImage({ title: doc?.title || 'Policy', sub: doc?.summary, photo: 1 })}
+        jsonLd={breadcrumb([{ name: 'Pravesha', path: '/' }, { name: doc?.title || 'Policy', path: `/${slug}` }])}
+      />
 
       <header className="relative isolate overflow-hidden pb-14 pt-32 text-white">
         <Photo name="1" variant={1} sizes="100vw" position="center 45%" alt="" className="absolute inset-0 -z-20 h-full w-full" />

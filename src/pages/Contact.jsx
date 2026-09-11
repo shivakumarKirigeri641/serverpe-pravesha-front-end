@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import Seo, { breadcrumb, ogImage } from '../lib/seo.jsx';
 import ContactForm from '../components/ContactForm.jsx';
 import Photo from '../components/Photo.jsx';
 import WaIcon from '../components/WaIcon.jsx';
@@ -25,11 +25,13 @@ export default function Contact() {
 
   return (
     <>
-      <Helmet>
-        <title>Contact — Pravesha</title>
-        <meta name="description" content="Reach the Pravesha team: send a message, WhatsApp, registered address and grievance redressal." />
-        <link rel="canonical" href="https://pravesha.in/contact" />
-      </Helmet>
+      <Seo
+        title="Contact Pravesha — support for entry passes"
+        description="Send us a message, reach us on WhatsApp, or write to support@pravesha.in. Registered address and grievance redressal details for Pravesha entry passes."
+        path="/contact"
+        image={ogImage({ title: 'Talk to us', sub: 'Support for bookings, payments and passes.', photo: 3 })}
+        jsonLd={breadcrumb([{ name: 'Pravesha', path: '/' }, { name: 'Contact', path: '/contact' }])}
+      />
 
       <header className="relative isolate overflow-hidden pb-14 pt-32 text-white">
         <Photo name="3" variant={2} sizes="100vw" position="center 60%" alt="" className="absolute inset-0 -z-20 h-full w-full" />

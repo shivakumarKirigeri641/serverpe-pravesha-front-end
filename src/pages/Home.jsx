@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import Seo, { destinations as destinationsLd, faqPage, organisation, service, website } from '../lib/seo.jsx';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import Landscape from '../components/Landscape.jsx';
 import Photo from '../components/Photo.jsx';
@@ -48,6 +48,17 @@ const FALLBACK_PLACES = [
   { code: 'JOGFALLS', name: 'Jog Falls', name_kn: 'ಜೋಗ ಜಲಪಾತ', district: 'Shivamogga', is_active: false },
 ];
 
+const faqList = ({ days, release, lastEntryMin }) => [
+    { q: 'Do I need to install an app?', a: 'No. Pravesha works entirely inside WhatsApp. Message the Pravesha number with “hi” and follow the buttons.' },
+    { q: 'Do I need to print the pass?', a: 'No. Staff at the checkpost record your vehicle’s entry digitally against your pass. Keep the WhatsApp message or PDF handy in case you are asked for it.' },
+    { q: 'When can I book?', a: `Up to ${days} days in advance. A new date opens every day at ${release}. You can also book for today, as long as the slot has more than ${lastEntryMin} minutes left.` },
+    { q: 'Can I use my pass for a different vehicle?', a: 'No. A pass is issued for one registration number, one place, one date and one slot. Book a separate pass for each vehicle.' },
+    { q: 'How do I see the passes I have booked?', a: 'Tap “My passes” in the chat, or type “my passes”. Every upcoming pass booked from your number is sent to you again, with its PDF. You are not asked to type anything else.' },
+    { q: 'What if the money is deducted but no pass arrives?', a: 'Your slot is held while you pay, and payments are reconciled automatically. If a payment succeeded, the pass is issued; if it could not be, the amount is refunded. See the Refund & Cancellation Policy.' },
+    { q: 'Can I cancel a pass?', a: 'Our Refund & Cancellation Policy sets out when a pass can be cancelled and how a refund is made.' },
+    { q: 'How do I delete my data?', a: 'Send “DELETE MY DATA” to the Pravesha WhatsApp number from the number you booked with. The Data Deletion page explains what is removed and what tax law requires us to keep.' },
+];
+
 const STEPS = [
   { t: 'Say hi on WhatsApp', d: 'Message the Pravesha number. Accept the terms and choose English or ಕನ್ನಡ.' },
   { t: 'Pick place, date and slot', d: 'A secure form opens inside WhatsApp. See live availability for your vehicle type.' },
@@ -76,19 +87,24 @@ export default function Home() {
   const release = fmtHour(rules.release_hour ?? 18);
   const lastEntryMin = rules.last_entry_minutes_before_end ?? 60;
   const slots = places.find((p) => p.is_active)?.slots || places[0]?.slots || [];
+  /* One list, read by the page and by the structured data, so a rich result can
+     never promise an answer the page does not give. */
+  const faqs = faqList({ days, release, lastEntryMin });
 
   return (
     <>
-      <Helmet>
-        <title>Pravesha — Vehicle entry passes for Karnataka&apos;s hill destinations</title>
-        <link rel="canonical" href="https://pravesha.in/" />
-      </Helmet>
+      <Seo
+        title="Pravesha — Vehicle entry passes for Karnataka's hill destinations"
+        description="Book your vehicle entry pass for Mullayanagiri and Karnataka's hill destinations on WhatsApp in about a minute. Choose a date and time slot, pay online, and drive up — no app, no queue, no printout."
+        path="/"
+        jsonLd={[organisation(), website(), service(wa), destinationsLd(places, ABOUT), faqPage(faqs)]}
+      />
       <Hero wa={wa} tagline={site?.product?.tagline} taglineKn={site?.product?.tagline_kn} />
       <HowItWorks wa={wa} />
       <Destinations places={places} wa={wa} />
       <GoodToKnow days={days} release={release} lastEntryMin={lastEntryMin} slots={slots} notPermitted={rules.not_permitted} />
       <Responsible />
-      <Faq days={days} release={release} lastEntryMin={lastEntryMin} />
+      <Faq faqs={faqs} />
       <FinalCta wa={wa} />
     </>
   );
@@ -360,17 +376,7 @@ function Responsible() {
   );
 }
 
-function Faq({ days, release, lastEntryMin }) {
-  const faqs = [
-    { q: 'Do I need to install an app?', a: 'No. Pravesha works entirely inside WhatsApp. Message the Pravesha number with “hi” and follow the buttons.' },
-    { q: 'Do I need to print the pass?', a: 'No. Staff at the checkpost record your vehicle’s entry digitally against your pass. Keep the WhatsApp message or PDF handy in case you are asked for it.' },
-    { q: 'When can I book?', a: `Up to ${days} days in advance. A new date opens every day at ${release}. You can also book for today, as long as the slot has more than ${lastEntryMin} minutes left.` },
-    { q: 'Can I use my pass for a different vehicle?', a: 'No. A pass is issued for one registration number, one place, one date and one slot. Book a separate pass for each vehicle.' },
-    { q: 'How do I see the passes I have booked?', a: 'Tap “My passes” in the chat, or type “my passes”. Every upcoming pass booked from your number is sent to you again, with its PDF. You are not asked to type anything else.' },
-    { q: 'What if the money is deducted but no pass arrives?', a: 'Your slot is held while you pay, and payments are reconciled automatically. If a payment succeeded, the pass is issued; if it could not be, the amount is refunded. See the Refund & Cancellation Policy.' },
-    { q: 'Can I cancel a pass?', a: 'Our Refund & Cancellation Policy sets out when a pass can be cancelled and how a refund is made.' },
-    { q: 'How do I delete my data?', a: 'Send “DELETE MY DATA” to the Pravesha WhatsApp number from the number you booked with. The Data Deletion page explains what is removed and what tax law requires us to keep.' },
-  ];
+function Faq({ faqs }) {
   const [open, setOpen] = useState(0);
   return (
     <section id="faq" className="scroll-mt-20 bg-mist-50 py-24">

@@ -1,4 +1,9 @@
+# Pravesha — vehicle entry passes for Karnataka's hill destinations
 User-agent: *
 Allow: /
+
+# Nothing here is private, but these are not pages.
+Disallow: /public/
+Disallow: /legal/
 
 Sitemap: https://pravesha.in/sitemap.xml

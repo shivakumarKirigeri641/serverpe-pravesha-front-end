@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../lib/seo.jsx';
 import Photo from '../components/Photo.jsx';
 import WaIcon from '../components/WaIcon.jsx';
 import { useSite } from '../lib/useSite';
@@ -10,7 +10,7 @@ export default function NotFound() {
   const wa = site?.whatsapp?.link || FALLBACK_WA;
   return (
     <>
-      <Helmet><title>Page not found — Pravesha</title><meta name="robots" content="noindex" /></Helmet>
+      <Seo title="Page not found — Pravesha" description="This page does not exist." path="/404" noindex />
       <section className="relative isolate flex min-h-[80vh] items-center overflow-hidden pt-24 text-white">
         <Photo name="5" variant={3} sizes="100vw" position="center" alt="" className="absolute inset-0 -z-20 h-full w-full" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-br from-forest-900/90 via-brand-deep/80 to-forest-800/70" />
