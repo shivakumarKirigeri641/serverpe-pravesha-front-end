@@ -55,7 +55,7 @@ const faqList = ({ days, release, lastEntryMin }) => [
     { q: 'Can I use my pass for a different vehicle?', a: 'No. A pass is issued for one registration number, one place, one date and one slot. Book a separate pass for each vehicle.' },
     { q: 'How do I see the passes I have booked?', a: 'Tap “My passes” in the chat, or type “my passes”. Every upcoming pass booked from your number is sent to you again, with its PDF. You are not asked to type anything else.' },
     { q: 'What if the money is deducted but no pass arrives?', a: 'Your slot is held while you pay, and payments are reconciled automatically. If a payment succeeded, the pass is issued; if it could not be, the amount is refunded. See the Refund & Cancellation Policy.' },
-    { q: 'Can I cancel a pass?', a: 'Our Refund & Cancellation Policy sets out when a pass can be cancelled and how a refund is made.' },
+    { q: 'Can I cancel a pass?', a: 'No. Every pass is final and is not refunded — see our Refund & Cancellation Policy. Moving a pass to another date is coming soon, once approved.' },
     { q: 'How do I delete my data?', a: 'Send “DELETE MY DATA” to the Pravesha WhatsApp number from the number you booked with. The Data Deletion page explains what is removed and what tax law requires us to keep.' },
 ];
 
@@ -94,8 +94,8 @@ export default function Home() {
   return (
     <>
       <Seo
-        title="Pravesha — Vehicle entry passes for Karnataka's hill destinations"
-        description="Book your vehicle entry pass for Mullayanagiri and Karnataka's hill destinations on WhatsApp in about a minute. Choose a date and time slot, pay online, and drive up — no app, no queue, no printout."
+        title="Pravesha — Entry passes for Karnataka's destinations, on WhatsApp"
+        description="Book an entry pass for your vehicle or your group to Mullayanagiri and Karnataka's destinations on WhatsApp in about a minute. Choose a date and time slot, pay online, and go — no app, no queue, no printout."
         path="/"
         jsonLd={[organisation(), website(), service(wa), destinationsLd(places, ABOUT), faqPage(faqs)]}
       />
@@ -127,15 +127,15 @@ function Hero({ wa, tagline, taglineKn }) {
           className="text-white"
         >
           <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3.5 py-1.5 text-[13px] font-semibold backdrop-blur">
-            <span className="h-2 w-2 rounded-full bg-[#25d366]" /> Now live for Mullayanagiri
+            <span className="h-2 w-2 rounded-full bg-sunrise-300" /> Karnataka Tourism approval awaited
           </span>
           <h1 className="mt-5 text-[2.6rem] font-extrabold leading-[1.05] sm:text-6xl lg:text-[4.2rem]">
             The hills are calling.<br />
             <span className="text-sunrise-300">Your pass is a message away.</span>
           </h1>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/85">
-            Book your vehicle entry pass for Karnataka&rsquo;s hill destinations on WhatsApp — pick a place, a date and a
-            time slot, pay online, and drive up. No app, no queue, no printout.
+            Book your entry pass for Karnataka&rsquo;s destinations on WhatsApp — for your vehicle or for your group.
+            Pick a place, a date and a time slot, pay online, and go. No app, no queue, no printout.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <a href={wa} target="_blank" rel="noopener noreferrer" className="btn-wa text-[17px]">
@@ -144,7 +144,7 @@ function Hero({ wa, tagline, taglineKn }) {
             <a href="#how" className="btn-ghost">How it works</a>
           </div>
           <p className="mt-6 text-[15px] font-medium text-white/70">
-            {tagline || 'Entry made simple.'} <span className="mx-1.5 opacity-50">·</span> {taglineKn || 'ಪ್ರವೇಶ ಈಗ ಸರಳ.'}
+            {tagline || 'Entry made simple & secured.'} <span className="mx-1.5 opacity-50">·</span> {taglineKn || 'ಪ್ರವೇಶ ಈಗ ಸರಳ ಮತ್ತು ಸುರಕ್ಷಿತ.'}
           </p>
         </motion.div>
 
@@ -175,7 +175,7 @@ function ChatMock() {
       </div>
       <div className="space-y-2 px-3 py-4">
         <div className={`${bubble} ml-auto bg-[#d9fdd3] text-ink`}>hi</div>
-        <div className={`${bubble} bg-white text-ink`}>Welcome to <b>Pravesha</b> 🙏 Book your vehicle entry pass in about a minute.</div>
+        <div className={`${bubble} bg-white text-ink`}>Welcome to <b>Pravesha</b> 🙏 Book your entry pass in about a minute.</div>
         <div className="flex gap-1.5">
           <span className="rounded-full bg-white px-3 py-1.5 text-[13px] font-semibold text-brand-light shadow-sm">Book pass</span>
           <span className="rounded-full bg-white px-3 py-1.5 text-[13px] font-semibold text-brand-light shadow-sm">My passes</span>

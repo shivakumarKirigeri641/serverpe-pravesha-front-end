@@ -95,7 +95,7 @@ export const organisation = (biz = {}) => ({
   url: SITE,
   logo: `${SITE}/icon-512.png`,
   image: ogImage(),
-  description: 'Vehicle entry passes for Karnataka’s hill destinations, booked on WhatsApp.',
+  description: 'Entry passes for vehicles and visitors to Karnataka’s destinations, booked on WhatsApp.',
   email: biz.email || 'support@pravesha.in',
   ...(biz.address ? {
     address: { '@type': 'PostalAddress', streetAddress: biz.address, addressLocality: 'Bengaluru', addressRegion: 'Karnataka', addressCountry: 'IN' },
@@ -117,8 +117,8 @@ export const website = () => ({
 export const service = (wa) => ({
   '@context': 'https://schema.org',
   '@type': 'Service',
-  name: 'Vehicle entry pass booking',
-  serviceType: 'Online vehicle entry pass for hill destinations',
+  name: 'Entry pass booking',
+  serviceType: 'Online entry pass for vehicles and visitors',
   provider: { '@id': `${SITE}/#organisation` },
   areaServed: { '@type': 'State', name: 'Karnataka' },
   availableChannel: {

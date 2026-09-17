@@ -50,7 +50,7 @@ export default function Contact() {
         <section>
           <h2 className="text-2xl font-extrabold text-ink">Send us a message</h2>
           <p className="mt-2 max-w-lg text-[16px] leading-relaxed text-muted">
-            Anything that needs a written record — a payment, a refund, a pass that did not arrive, or a data request.
+            Anything that needs a written record — a payment, a pass that did not arrive, or a data request.
             It reaches <span className="font-medium text-ink">{email}</span> and we reply by email.
           </p>
           <div className="mt-6"><ContactForm /></div>
@@ -105,7 +105,7 @@ export default function Contact() {
                 <a className="font-semibold text-brand-light hover:underline" href={`mailto:${officer.email}`}>{officer.email}</a>.
                 We acknowledge within {officer.acknowledge_hours} hours and aim to resolve within {officer.resolve_days} days.
               </p>
-              <Link to="/grievance" className="mt-4 inline-block font-semibold text-brand-light hover:underline">
+              <Link to="/grievance" target="_blank" rel="noopener noreferrer" className="mt-4 inline-block font-semibold text-brand-light hover:underline">
                 Read the grievance redressal policy →
               </Link>
             </div>

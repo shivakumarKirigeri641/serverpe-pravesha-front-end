@@ -19,6 +19,13 @@ const WIDTHS = [480, 768, 1024, 1400, 1920];
 export const photoSrc = (name, w = 1024) => `${BASE}/public/img/${name}.webp?w=${w}`;
 export const photoSrcSet = (name) => WIDTHS.map((w) => `${photoSrc(name, w)} ${w}w`).join(', ');
 
+/*
+ * PHOTOGRAPHS ARE OFF (user, 2026-09-17). The site shows the drawn landscape
+ * only, until the real photographs are supplied; turn this back on then and
+ * every section picks them up again.
+ */
+const USE_PHOTOS = false;
+
 export default function Photo({
   name,
   alt = '',
@@ -33,7 +40,7 @@ export default function Photo({
   return (
     <div className={`relative overflow-hidden ${className}`}>
       <Landscape variant={variant} className="absolute inset-0 h-full w-full" />
-      <img
+      {USE_PHOTOS && <img
         src={photoSrc(name, 1024)}
         srcSet={photoSrcSet(name)}
         sizes={sizes}
@@ -45,7 +52,7 @@ export default function Photo({
         onError={() => setLoaded(false)}
         style={{ objectPosition: position }}
         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'} ${imgClassName}`}
-      />
+      />}
     </div>
   );
 }

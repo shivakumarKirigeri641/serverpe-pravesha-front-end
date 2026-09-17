@@ -3,13 +3,15 @@ import Landscape from './Landscape.jsx';
 import { useLegalIndex, useSite } from '../lib/useSite';
 import { FALLBACK_WA } from '../lib/api';
 
+/* Said wherever the service is described, until the approval is granted (user, 2026-09-17). */
+export const APPROVAL_NOTE = 'Approval from the Department of Tourism, Government of Karnataka, is awaited.';
+
 export default function Footer() {
   const index = useLegalIndex();
   const site = useSite();
   const biz = index?.business || {};
   const docs = index?.documents || [];
   const wa = site?.whatsapp?.link || FALLBACK_WA;
-  const year = new Date().getFullYear();
 
   return (
     <footer className="relative mt-24 overflow-hidden bg-forest-900 text-white/80">
@@ -24,8 +26,8 @@ export default function Footer() {
             <span className="text-sm font-semibold text-brand-accent">ಪ್ರವೇಶ</span>
           </div>
           <p className="mt-4 max-w-md text-[15px] leading-relaxed">
-            Vehicle entry passes for Karnataka&rsquo;s hill destinations, booked on WhatsApp.
-            Pick a place, a date and a time slot, pay online, and drive up.
+            Entry passes for Karnataka&rsquo;s destinations — for your vehicle or for your group — booked on
+            WhatsApp. Pick a place, a date and a time slot, pay online, and go.
           </p>
           <a href={wa} target="_blank" rel="noopener noreferrer" className="btn-wa mt-6">Book on WhatsApp</a>
         </div>
@@ -38,7 +40,10 @@ export default function Footer() {
               { slug: 'data-deletion', title: 'Data Deletion' }, { slug: 'refund-policy', title: 'Refund & Cancellation Policy' },
               { slug: 'delivery-policy', title: 'Pass Delivery Policy' }, { slug: 'grievance', title: 'Grievance Redressal' },
             ]).map((d) => (
-              <li key={d.slug}><Link to={`/${d.slug}`} className="transition hover:text-white">{d.title}</Link></li>
+              <li key={d.slug}>
+                {/* Opens in its own tab (user, 2026-09-17): reading a policy should not take the visitor off the page they were on. */}
+                <Link to={`/${d.slug}`} target="_blank" rel="noopener noreferrer" className="transition hover:text-white">{d.title}</Link>
+              </li>
             ))}
           </ul>
         </div>
@@ -54,8 +59,9 @@ export default function Footer() {
       </div>
 
       <div className="container-x relative flex flex-col gap-2 border-t border-white/10 py-6 text-[13px] text-white/60 sm:flex-row sm:items-center sm:justify-between">
-        <p>© {year} {biz.legal_name || 'ServerPe App Solutions'}. {biz.gstin ? `GSTIN ${biz.gstin}.` : ''}</p>
-        <p>Pravesha is a product of {biz.legal_name || 'ServerPe App Solutions'} — {biz.vendor_tagline || 'Smart Clicks, Smart Taps.'}</p>
+        {/* Trademark, and no copyright line (user, 2026-09-17). */}
+        <p>Pravesha™ is a trademark of {biz.legal_name || 'ServerPe App Solutions'}™. {biz.gstin ? `GSTIN ${biz.gstin}.` : ''}</p>
+        <p>{APPROVAL_NOTE}</p>
       </div>
     </footer>
   );
