@@ -37,8 +37,13 @@ export default function Photo({
   priority = false,
 }) {
   const [loaded, setLoaded] = useState(false);
+  /* `relative` only when the caller has not positioned it. Both together and
+     Tailwind's order makes `relative` win — the hero's `absolute inset-0`
+     background then became a block beside the text, pushing the headline into
+     the right half of a phone (2026-09-19). */
+  const positioned = /(^|\s)(absolute|fixed|sticky)(\s|$)/.test(className);
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className={`${positioned ? '' : 'relative '}overflow-hidden ${className}`}>
       <Landscape variant={variant} className="absolute inset-0 h-full w-full" />
       {USE_PHOTOS && <img
         src={photoSrc(name, 1024)}
