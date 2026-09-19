@@ -108,7 +108,7 @@ export default function ContactForm() {
         </button>
         <p className="text-[13px] text-muted">
           We use what you send only to answer you. See our{' '}
-          <a href="/privacy" target="_blank" rel="noopener noreferrer" className="font-semibold text-brand-light underline-offset-4 hover:underline">privacy policy</a>.
+          <a href="/policy/privacy" target="_blank" rel="noopener noreferrer" className="font-semibold text-brand-light underline-offset-4 hover:underline">privacy policy</a>.
         </p>
       </div>
     </form>

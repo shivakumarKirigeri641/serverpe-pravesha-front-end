@@ -105,7 +105,7 @@ export default function Contact() {
                 <a className="font-semibold text-brand-light hover:underline" href={`mailto:${officer.email}`}>{officer.email}</a>.
                 We acknowledge within {officer.acknowledge_hours} hours and aim to resolve within {officer.resolve_days} days.
               </p>
-              <Link to="/grievance" target="_blank" rel="noopener noreferrer" className="mt-4 inline-block font-semibold text-brand-light hover:underline">
+              <Link to="/policy/grievance" target="_blank" rel="noopener noreferrer" className="mt-4 inline-block font-semibold text-brand-light hover:underline">
                 Read the grievance redressal policy →
               </Link>
             </div>

@@ -42,7 +42,7 @@ export default function Footer() {
             ]).map((d) => (
               <li key={d.slug}>
                 {/* Opens in its own tab (user, 2026-09-17): reading a policy should not take the visitor off the page they were on. */}
-                <Link to={`/${d.slug}`} target="_blank" rel="noopener noreferrer" className="transition hover:text-white">{d.title}</Link>
+                <Link to={`/policy/${d.slug}`} target="_blank" rel="noopener noreferrer" className="transition hover:text-white">{d.title}</Link>
               </li>
             ))}
           </ul>

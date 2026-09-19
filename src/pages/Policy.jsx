@@ -58,10 +58,10 @@ export default function Policy({ slug }) {
       <Seo
         title={`${doc?.title || 'Policy'} — Pravesha`}
         description={doc?.summary || 'A Pravesha policy.'}
-        path={`/${slug}`}
+        path={`/policy/${slug}`}
         type="article"
         image={ogImage({ title: doc?.title || 'Policy', sub: doc?.summary, photo: 1 })}
-        jsonLd={breadcrumb([{ name: 'Pravesha', path: '/' }, { name: doc?.title || 'Policy', path: `/${slug}` }])}
+        jsonLd={breadcrumb([{ name: 'Pravesha', path: '/' }, { name: doc?.title || 'Policy', path: `/policy/${slug}` }])}
       />
 
       <header className="relative isolate overflow-hidden pb-14 pt-32 text-white">
@@ -169,7 +169,7 @@ export default function Policy({ slug }) {
               <ul className="mt-3 space-y-2 text-[14px]">
                 {others.map((d) => (
                   <li key={d.slug}>
-                    <Link to={`/${d.slug}`} className="text-muted transition hover:text-brand-light">{d.title}</Link>
+                    <Link to={`/policy/${d.slug}`} className="text-muted transition hover:text-brand-light">{d.title}</Link>
                   </li>
                 ))}
                 <li><Link to="/contact" className="text-muted transition hover:text-brand-light">Contact us</Link></li>

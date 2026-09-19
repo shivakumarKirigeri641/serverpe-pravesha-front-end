@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import Home from './pages/Home.jsx';
@@ -13,10 +13,15 @@ import NotFound from './pages/NotFound.jsx';
  * delivery, contact), and a reviewer should land on exactly the document named.
  * The slug is the policy's slug in the back-end, so the two cannot disagree.
  *
+ * They live under /policy/ — pravesha.in/policy/terms (user, 2026-09-19); the
+ * earlier addresses, pravesha.in/terms and the rest, move there so a link
+ * already handed out still lands on its document.
+ *
  * Deployment needs the usual single-page fallback (serve index.html for unknown
  * paths) so these URLs work when opened directly.
  */
 export const POLICY_SLUGS = ['privacy', 'terms', 'data-deletion', 'refund-policy', 'delivery-policy', 'grievance'];
+export const policyPath = (slug) => `/policy/${slug}`;
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -39,7 +44,10 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           {POLICY_SLUGS.map((slug) => (
-            <Route key={slug} path={`/${slug}`} element={<Policy slug={slug} />} />
+            <Route key={slug} path={policyPath(slug)} element={<Policy slug={slug} />} />
+          ))}
+          {POLICY_SLUGS.map((slug) => (
+            <Route key={`old-${slug}`} path={`/${slug}`} element={<Navigate to={policyPath(slug)} replace />} />
           ))}
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
