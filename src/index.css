@@ -3,10 +3,29 @@
 @tailwind utilities;
 
 @layer base {
-  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-  body { @apply bg-white text-ink font-sans antialiased; }
+  /*
+   * SCROLLING (user, 2026-09-19). Smooth in-page jumps that stop below the
+   * fixed header rather than under it; a scroll that does not drag the page
+   * behind it at the ends; and a slim scrollbar in the brand's colours instead
+   * of the browser's grey slab.
+   */
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 5.5rem; }
+  body { @apply bg-white text-ink font-sans antialiased; overscroll-behavior-y: none; }
   h1, h2, h3 { @apply font-display tracking-tight; }
   ::selection { background: #cfe5dc; }
+
+  /* Firefox */
+  html { scrollbar-width: thin; scrollbar-color: #0f766e33 transparent; }
+  /* Chrome, Edge, Safari */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(#0f766e66, #07564d66);
+    border: 3px solid transparent;
+    border-radius: 999px;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: linear-gradient(#0f766eaa, #07564daa); background-clip: content-box; }
 }
 
 @layer components {
@@ -17,6 +36,41 @@
   .card { @apply rounded-2xl border border-line bg-white shadow-soft; }
   .input { @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-[16px] text-ink outline-none transition placeholder:text-muted/60 focus:border-brand-accent focus:ring-4 focus:ring-brand-accent/15; }
 }
+
+/*
+ * MOTION THAT SAYS SOMETHING (2026-09-19).
+ *
+ * A page arrives with one short rise; a list arrives in order, a beat apart, so
+ * the eye is led down it; something that appears in answer to a tap pops once.
+ * Nothing loops, nothing bounces, and every one of these is off for anybody who
+ * has asked for less motion (the rule at the foot of this file).
+ */
+@layer components {
+  .page-in { animation: page-in .4s cubic-bezier(.22, 1, .36, 1) backwards; }
+  .pop-in { animation: pop-in .26s cubic-bezier(.22, 1, .36, 1) backwards; }
+  /* Children arrive one after another — up to eight, then together. */
+  .stagger > * { animation: page-in .5s cubic-bezier(.22, 1, .36, 1) backwards; }
+  .stagger > *:nth-child(1) { animation-delay: .02s; }
+  .stagger > *:nth-child(2) { animation-delay: .08s; }
+  .stagger > *:nth-child(3) { animation-delay: .14s; }
+  .stagger > *:nth-child(4) { animation-delay: .2s; }
+  .stagger > *:nth-child(5) { animation-delay: .26s; }
+  .stagger > *:nth-child(6) { animation-delay: .32s; }
+  .stagger > *:nth-child(7) { animation-delay: .38s; }
+  .stagger > *:nth-child(n+8) { animation-delay: .44s; }
+  /* A card that answers the pointer, and a link whose underline draws itself. */
+  .lift { @apply transition duration-200 hover:-translate-y-1 hover:shadow-lift; }
+  .underline-grow { @apply relative; }
+  .underline-grow::after {
+    content: ''; position: absolute; left: 0; bottom: -4px; height: 2px; width: 100%;
+    background: currentColor; transform: scaleX(0); transform-origin: left;
+    transition: transform .25s cubic-bezier(.22, 1, .36, 1);
+  }
+  .underline-grow:hover::after { transform: scaleX(1); }
+}
+
+@keyframes page-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes pop-in { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
 
 /* Motion is decoration here; anyone who asks for less gets none. */
 @media (prefers-reduced-motion: reduce) {

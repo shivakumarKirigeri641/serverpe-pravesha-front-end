@@ -51,7 +51,7 @@ export default function ContactForm() {
 
   if (done) {
     return (
-      <div className="card p-7 text-center">
+      <div className="pop-in card p-7 text-center">
         <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-brand-accent/15 text-2xl text-brand">✓</div>
         <h3 className="mt-4 text-xl font-bold text-ink">Message received</h3>
         <p className="mx-auto mt-2 max-w-md text-[16px] leading-relaxed text-muted">

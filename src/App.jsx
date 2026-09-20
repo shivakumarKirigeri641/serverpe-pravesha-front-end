@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
+import ScrollUI from './components/ScrollUI.jsx';
 import Home from './pages/Home.jsx';
 import Policy from './pages/Policy.jsx';
 import Contact from './pages/Contact.jsx';
@@ -36,11 +37,15 @@ function ScrollToTop() {
 }
 
 export default function App() {
+  /* Keyed by the path: arriving on a page is one short rise rather than a
+     flicker, and nothing moves again while it is being read. */
+  const { pathname } = useLocation();
   return (
     <div className="flex min-h-screen flex-col">
       <ScrollToTop />
+      <ScrollUI />
       <Header />
-      <main className="flex-1">
+      <main key={pathname} className="page-in flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
           {POLICY_SLUGS.map((slug) => (

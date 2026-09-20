@@ -82,7 +82,7 @@ export default function Policy({ slug }) {
       </header>
 
       <div className="container-x grid gap-12 py-16 lg:grid-cols-[1fr_260px]">
-        <article className="max-w-3xl space-y-10">
+        <article className="stagger max-w-3xl space-y-10">
           {state === 'loading' && (
             <div className="space-y-6" aria-busy="true">
               {[0, 1, 2, 3].map((i) => (
